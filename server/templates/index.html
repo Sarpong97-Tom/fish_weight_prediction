@@ -36,14 +36,21 @@
 
     <div class="header py-3">
         <h1 class="text-center" >Machine Learning And It's deployment</h1>
+        <h2 class = "text-center" > Fish Weight Prediction </h2>
     </div>
+  
     <div class="demo">
         <div class="container py-5 ">
+              <div class="text-start">
+        <p>The project solves a problem with the idea that, given the lengths of a particular fish,its weight, height and knowing the species, the weight can be predicted. </p>
+        </div>
+        <p>Seven different species of fish were captured in the data. Model was trained with the linear regression algorithm with an accuracy of 92%</p>
+        <p>Below is a demo of the model placed in production.</p>
             <div class="results">
             <div class="results-container">
                <div class="row">
                    <div class="col-6">
-                       <h6>Likely area to burn:</h6>
+                       <h6>Fish Weight Prediction:</h6>
                    </div>
                     <div class="col-3">
                        <h6 id = "result" ></h6>
@@ -52,56 +59,60 @@
             </div>
             </div>
             
-<form action="" id = "form" > 
-    <div class="row">
-    <div class="col-12 col-md-6">
-    <div class="form-group">
-            <label for="exampleInputEmail1">Relative humidity</label>
-            <input name="humidity" required type="number" class="form-control" id="relative-humidity"  placeholder="Relative humidity">
-            <small id="help" class="form-text text-muted">Enter the relative humidy of the area</small>
-        </div>
+            <form action="" id = "form" > 
+                <div class="row">
+                    
+                        <div class="col-12 col-md-6">
+                        <div class="form-group">
+                    <label for="species">Species</label>
+                    <select name="day" required class="form-control" id="species">
+                    <option value="Bream" >Bream</option>
+                    <option value="Roach" >Roach</option>
+                    <option value="Whitefish" >Whitefish</option>
+                    <option value="Parkki" >Parkki</option>
+                    <option value="Perch" >Perch</option>
+                    <option value="Pike" >Pike</option>
+                    <option value="Smelt" >Smelt</option>
+                    </select>
+            </div>
         </div>
 
 
             <div class="col-12 col-md-6">
                 <div class="form-group">
-                    <label >Temperature</label>
-                    <input name="temperature" required type="text" class="form-control" id="temperature" placeholder="temperature">
-                </div>
-            </div>
-
-               <div class="col-12 col-md-6">
-                    <div class="form-group">
-                        <label for="exampleFormControlSelect1">Day</label>
-                        <select name="day" required class="form-control" id="day">
-                        <option value="Sunday" >Sunday</option>
-                        <option value="Monday" >Monday</option>
-                        <option value="Tuesday" >Tuesday</option>
-                        <option value="Wednesday" >Wednesday</option>
-                        <option value="Friday" >Friday</option>
-                        <option value="Saturday" >Saturday</option>
-                        </select>
+                    <label >Length 1</label>
+                    <input name="length1" required type="text" class="form-control" id="length1" placeholder="temperature">
                 </div>
             </div>
 
                 <div class="col-12 col-md-6">
-                    <div class="form-group">
-                        <label  for="exampleFormControlSelect1">Month</label>
-                       <input  />
+                <div class="form-group">
+                    <label >Length 2</label>
+                    <input name="length2" required type="text" class="form-control" id="length2" placeholder="temperature">
                 </div>
             </div>
+
+                <div class="col-12 col-md-6">
+                <div class="form-group">
+                    <label >Length 3</label>
+                    <input name="length3" required type="text" class="form-control" id="length3" placeholder="temperature">
+                </div>
+            </div>
+
+      
+        
 
 
             <div class="col-12 col-md-6">
                 <div class="form-group">
-                    <label >Wind Speed</label>
-                    <input name="wind"  type="number" class="form-control" id="wind-speed" placeholder="Enter wind spees">
+                    <label >Height</label>
+                    <input name="height"  type="number" class="form-control" id="height" placeholder="Enter height spees">
                 </div>
             </div>
                         <div class="col-12 col-md-6">
                 <div class="form-group">
-                    <label  >Rain</label>
-                    <input name="rain" required type="number" class="form-control" id="rain" placeholder="rain">
+                    <label  >Width</label>
+                    <input name="width" required type="number" class="form-control" id="width" placeholder="Width">
                 </div>
             </div>
             <div class="col-12 col-md-6"></div>
@@ -125,21 +136,22 @@
      $('#result').text("No Results yet")
         $('#form').submit((e)=>{
             e.preventDefault()
-            const temperature = $('#temperature').val()
-            const wind = $('#wind-speed').val()
-            const humidity = $('#relative-humidity').val()
-            const rain = $('#rain').val()
-            const month = $('#month').val()
-            const day = $('#day').val()
+            const species = $('#species').val()
+            const length1 = $('#length1').val()
+            const length2 = $('#length2').val()
+            const length3 = $('#length3').val()
+            const height = $('#height').val()
+            const width = $('#width').val()
             const data = {
-                temperature,
-                humidity,
-                wind,
-                rain,
-                month,
-                day
+                species,
+                length1,
+                length2,
+                length3,
+                height,
+                width
             }
-            
+            console.log(data);
+
             $.post(
                 {
                     type:"POST",
@@ -153,7 +165,6 @@
                         alert('An error occured')
                     },
                     success:(data,text)=>{
-                        
                         $('#result').text(data.results)
                         scrollTo(0,0)
                         
