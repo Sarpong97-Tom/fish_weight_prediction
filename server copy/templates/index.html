@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ML DEPLOYMENT</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+     <style>
+         body{
+              background-image: linear-gradient(to right, teal , aqua);
+         }
+         p, h1 ,h2 ,h6 ,label, small{
+             color: #fff;
+         }
+         .results{
+            margin: 2em 0;
+         }
+         .results-container{
+             width: 100%;
+             height: 300px;
+             border: 1px solid #fff;
+             display: flex;
+             justify-content: center;
+             align-items: center;
+         }
+         #submit{
+             width: 100%;
+             border-radius: 8px;
+         }
+
+     </style>
+
+</head>
+<body>
+
+    <div class="header py-3">
+        <h1 class="text-center" >Machine Learning And It's deployment</h1>
+    </div>
+    <div class="demo">
+        <div class="container py-5 ">
+            <div class="results">
+            <div class="results-container">
+               <div class="row">
+                   <div class="col-6">
+                       <h6>Likely area to burn:</h6>
+                   </div>
+                    <div class="col-3">
+                       <h6 id = "result" ></h6>
+                   </div>
+               </div>     
+            </div>
+            </div>
+            
+<form action="" id = "form" > 
+    <div class="row">
+    <div class="col-12 col-md-6">
+    <div class="form-group">
+            <label for="exampleInputEmail1">Relative humidity</label>
+            <input name="humidity" required type="number" class="form-control" id="relative-humidity"  placeholder="Relative humidity">
+            <small id="help" class="form-text text-muted">Enter the relative humidy of the area</small>
+        </div>
+        </div>
+
+
+            <div class="col-12 col-md-6">
+                <div class="form-group">
+                    <label >Temperature</label>
+                    <input name="temperature" required type="text" class="form-control" id="temperature" placeholder="temperature">
+                </div>
+            </div>
+
+               <div class="col-12 col-md-6">
+                    <div class="form-group">
+                        <label for="exampleFormControlSelect1">Day</label>
+                        <select name="day" required class="form-control" id="day">
+                        <option value="Sunday" >Sunday</option>
+                        <option value="Monday" >Monday</option>
+                        <option value="Tuesday" >Tuesday</option>
+                        <option value="Wednesday" >Wednesday</option>
+                        <option value="Friday" >Friday</option>
+                        <option value="Saturday" >Saturday</option>
+                        </select>
+                </div>
+            </div>
+
+                <div class="col-12 col-md-6">
+                    <div class="form-group">
+                        <label  for="exampleFormControlSelect1">Month</label>
+                       <input  />
+                </div>
+            </div>
+
+
+            <div class="col-12 col-md-6">
+                <div class="form-group">
+                    <label >Wind Speed</label>
+                    <input name="wind"  type="number" class="form-control" id="wind-speed" placeholder="Enter wind spees">
+                </div>
+            </div>
+                        <div class="col-12 col-md-6">
+                <div class="form-group">
+                    <label  >Rain</label>
+                    <input name="rain" required type="number" class="form-control" id="rain" placeholder="rain">
+                </div>
+            </div>
+            <div class="col-12 col-md-6"></div>
+            <div class="col-12 col-md-6 my-3">
+                    <button type="submit" id = "submit" class="btn btn-primary">Submit</button>
+            </div>
+        </div>
+
+
+
+ 
+</form> </div>
+    </div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    $(document).ready(()=>{
+     $('#result').text("No Results yet")
+        $('#form').submit((e)=>{
+            e.preventDefault()
+            const temperature = $('#temperature').val()
+            const wind = $('#wind-speed').val()
+            const humidity = $('#relative-humidity').val()
+            const rain = $('#rain').val()
+            const month = $('#month').val()
+            const day = $('#day').val()
+            const data = {
+                temperature,
+                humidity,
+                wind,
+                rain,
+                month,
+                day
+            }
+            
+            $.post(
+                {
+                    type:"POST",
+                    url:'/predict',
+                    data:JSON.stringify(data),
+                    contentType:"application/json, charset=utf-8",
+                    dataType:'json',
+                    
+                    error:(error,text)=>{
+                        console.log(error,text);
+                        alert('An error occured')
+                    },
+                    success:(data,text)=>{
+                        
+                        $('#result').text(data.results)
+                        scrollTo(0,0)
+                        
+                    }
+                }
+            )
+           
+            
+        })
+    })
+</script>
+</body>
+</html>
