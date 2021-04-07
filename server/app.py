@@ -4,7 +4,6 @@ import json
 import numpy as np
 import joblib
 
-
 app = flask.Flask(__name__)
 
 
@@ -55,7 +54,7 @@ def predict():
     print(preprocess_data(data))
     results = make_predict(load_model(model_path),preprocess_data(data))
     return json.dumps({
-        "results":results  
+        "results":round(results,2)  
         })
 
 
