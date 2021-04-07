@@ -46,6 +46,10 @@
         </div>
         <p>Seven different species of fish were captured in the data. Model was trained with linear regression algorithm with an accuracy of 92%</p>
         <p>Below is a demo application where the model is used for prediction</p>
+        <p>
+            <h6  >Note</h6>
+            <p>Fishes have stremlined body.  It is then not possible to measure a constant length. <br> Length1 is the length measured at the head section <br> Length2 is measured at the mid-body section   <br> Length3 is measured at tail section </p>
+        </p>
             <div class="results">
             <div class="results-container">
                <div class="row">
@@ -166,7 +170,7 @@
                     },
                     success:(data,text)=>{
                         $('#result').text(data.results)
-                        scrollTo(0,300)
+                        scrollTo(0,400)
                         
                     }
                 }
